@@ -1,16 +1,16 @@
 import React ,{useEffect, useState}from 'react'
 import { Container, PostForm } from '../components'
-import service from '../appwrite/config.service'
+import appwriteService from '../appwrite/config.service'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function Editpost() {
     const [post, setPost] = useState(null)
     const {slug} = useParams()
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
-    useEffect((slug) => {
+    useEffect(() => {
         if(slug){
-            service.getPosts(slug).then((post) => {
+            appwriteService.getPost(slug).then((post) => {
                 if(post){
                     setPost(post)
                 }
@@ -22,7 +22,7 @@ function Editpost() {
   return post ? (
     <div>
         <Container>
-            <PostForm post = {post}/>
+            <PostForm post={post}/>
         </Container>
     </div>
   ) : null

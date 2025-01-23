@@ -11,7 +11,7 @@ function PostCard({$id, title, featuredImage}) { //$id - special syntax of aappw
                  alt={title} className='rounded-xl'/>
             </div>
         </div>
-        <h2 className='text-xl'>
+        <h2 className='text-xl font-bold'>
             {title}</h2>
     </Link>
   )
