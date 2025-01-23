@@ -1,8 +1,8 @@
-import React ,{useState} from 'react'
+import React ,{useState, useEffect} from 'react'
 import {Link, useNavigate} from 'react-router-dom';
 import {login as authLogin} from '../store/authSlice.js'
 import {Button, Input, Logo} from './index.js'
-import { useDispatch } from 'react-redux'
+import { useDispatch , useSelector} from 'react-redux'
 import authService from '../appwrite/auth.service'
 import {useForm} from 'react-hook-form'
 
@@ -11,23 +11,31 @@ function Login() {
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
+    const userData = useSelector((state) => state.auth.userData); // Get the logged-in user data from the Redux store
 
     const login = async(data) => {
         setError("") //clear all error on submission start
         try {
             const session = await authService.login(data)
+            console.log("session done")
             if(session){
                 const userData = await authService.getCurrentUser()
-                console.log("Can go to home but not going")
+                console.log(userData)
                 if(userData){
                     dispatch(authLogin(userData));
                 }
-                navigate("/");
             }
         } catch (error) {
             setError(error.message)
         }
     }
+
+    useEffect(() => {
+        if (userData) {
+            navigate('/'); // Navigate to home page if user is logged in
+        }
+    }, [userData, navigate]);
+    
   return (
     <div
     className='flex items-center justify-center w-full pt-5 pb-5'

@@ -1,16 +1,26 @@
 import React, {useEffect, useState} from 'react'
 import { Container, PostCard } from '../components'
 import appwriteService from '../appwrite/config.service'
+import { useSelector } from "react-redux";
 
 function Home() {
-    const [posts, setPosts] = useState([])
+
+    const [posts, setPosts] = useState([]); // State to hold multiple posts
+    const userData = useSelector((state) => state.auth.userData); // Get the logged-in user data from the Redux store
+
     useEffect(() => {
-        appwriteService.getPosts().then((posts) => {
-            if(posts){
-                setPosts(posts.documents)
+        const fetchPosts = async () => {
+            if (userData?.$id) {
+                const userPosts = await appwriteService.getPostforHome(userData.$id); // Fetch posts for the logged-in user
+                if (userPosts) {
+                    setPosts(userPosts.documents); // Set the posts data
+                }
             }
-        })
-    }, [])
+        };
+
+        fetchPosts();
+    }, [userData]);
+
   if(posts.length === 0) return (
             <div className="w-full py-8 mt-4 text-center">
                 <Container>
@@ -28,12 +38,15 @@ function Home() {
     <div className='w-full py-8'>
         <div className='w-full py-8'>
             <Container>
-                <div className='flex flex-wrap'>
+                <div className='flex flex-wrap flex-col'>
+                <h1 className='font-bold text-4xl mb-10'>My Posts</h1>
+                    <div className='flex flex-row'>
                     {posts.map((post) => (
                         <div key={post.$id} className='p-2 w-1/4'>
                             <PostCard {...post} />
                         </div>
                     ))}
+                    </div>
                 </div>
             </Container>
         </div>

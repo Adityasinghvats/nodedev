@@ -7,8 +7,8 @@ export class AuthService{
 
     constructor(){
         this.client
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId)
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId);
 
         this.account = new Account(this.client);
     }
@@ -43,15 +43,15 @@ export class AuthService{
         } catch (error) {
             console.log("Appwrite service :: getCurrentUser :: error",  error);
         }
-        return null;//in case the account get method fails to return an error;
+        // return null;//in case the account get method fails to return an error;
     }
 
     async logout(){
         // eslint-disable-next-line no-useless-catch
         try {
-            return await this.account.deleteSessions();
+            await this.account.deleteSessions();
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: logout :: error", error);
         }
     }
 }

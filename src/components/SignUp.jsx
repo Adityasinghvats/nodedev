@@ -1,9 +1,9 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import authService from '../appwrite/auth.service'
 import {Link, useNavigate} from 'react-router-dom'
 import { login } from '../store/authSlice'
 import {Button, Input, Logo} from '../components/index.js'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 function SignUp() {
@@ -12,6 +12,14 @@ function SignUp() {
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
 
+    const userData = useSelector((state) => state.auth.userData); // Get the logged-in user data from the Redux store
+
+    useEffect(() => {
+        if (userData) {
+            navigate('/'); // Navigate to home page if user is signed up
+        }
+    }, [userData, navigate]);
+
     const signup = async(data) => {
         setError("")
         try {
@@ -19,7 +27,6 @@ function SignUp() {
             if(userdata){
                 const userData = await authService.getCurrentUser()
                 if(userData) dispatch(login(userData))
-                    navigate("/")
             }
         } catch (error) {
             setError(error.message)

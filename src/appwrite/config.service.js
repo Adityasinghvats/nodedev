@@ -45,7 +45,6 @@ export class Service{
                     content,
                     featuredImage,
                     status,
-
                 }
             )
         } catch (error) {
@@ -94,6 +93,20 @@ export class Service{
         } catch (error) {
             console.log("Appwrite serive :: getPosts :: error", error);
             return false
+        }
+    }
+    async getPostforHome(userId, queries = [Query.equal("status", "active")]) {
+        try {
+            // Add a query to filter posts by userId
+            queries.push(Query.equal("userId", userId));
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                queries
+            );
+        } catch (error) {
+            console.log("Appwrite service :: getPosts :: error", error);
+            return false;
         }
     }
 

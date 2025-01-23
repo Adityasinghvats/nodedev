@@ -6,21 +6,21 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
 export default function Post() {
-    const [post, setPost] = useState(null);
-    const { slug } = useParams();
-    const navigate = useNavigate();
+    const [post, setPost] = useState(null); // State to hold the post data
+    const { slug } = useParams(); // Get the slug from the URL parameters
+    const navigate = useNavigate(); // Hook for navigation
 
-    const userData = useSelector((state) => state.auth.userData);
+    const userData = useSelector((state) => state.auth.userData); // Get the logged-in user data from the Redux store
 
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
+    const isAuthor = post && userData ? post.userId === userData.$id : false; // Check if the logged-in user is the author of the post
 
     useEffect(() => {
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
+                if (post) setPost(post); // Set the post data if found
+                else navigate("/"); // Navigate to home if post not found
             });
-        } else navigate("/");
+        } else navigate("/"); // Navigate to home if slug is not provided
     }, [slug, navigate]);
 
     const deletePost = () => {
