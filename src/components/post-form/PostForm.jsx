@@ -7,13 +7,14 @@ import { useSelector } from 'react-redux'
 
 export default function PostForm({post}) {
     const userData = useSelector((state) => state.auth.userData)
+    console.log(userData)
     const {register, handleSubmit, watch, setValue, control, getValues} = useForm({
         defaultValues:{
             title: post?.title || "",
             slug : post?.$id || "",
             content : post?.content || "",
             status : post?.status || "active",
-            userId: userData?.$id || ""
+            // userId: userData?.$id || ""
         },
     })
 
@@ -24,6 +25,7 @@ export default function PostForm({post}) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null
             if(file){
                 appwriteService.deleteFile(post.featuredImage)
+                console.log("file created")
             }
             const dbPost = await appwriteService.updatePost(
                 post.$id, {
@@ -31,7 +33,9 @@ export default function PostForm({post}) {
                     featuredImage: file ? file.$id : undefined,
                 }
             )
+            console.log("post updated")
             if(dbPost) {
+                console.log("navigating to post")
                 navigate(`/post/${dbPost.$id}`)
             }
         }else {
@@ -42,7 +46,7 @@ export default function PostForm({post}) {
                 data.featuredImage = fileId
                 const dbPost = await appwriteService.createPost({
                     ...data,
-                    usedId : userData.$id,
+                    userId :userData.$id,
                 })
                 if(dbPost){
                     navigate(`/post/${dbPost.$id}`)
