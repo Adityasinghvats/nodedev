@@ -16,11 +16,13 @@ function Login() {
     const login = async(data) => {
         setError("") //clear all error on submission start
         try {
+            console.log("Attempting to log in with data:", data);
             const session = await authService.login(data)
             console.log("session done")
             if(session){
+                console.log("Fetching current user");
                 const userData = await authService.getCurrentUser()
-                console.log(userData)
+                console.log("Inside session", userData)
                 if(userData){
                     dispatch(authLogin(userData));
                 }
@@ -35,7 +37,7 @@ function Login() {
             navigate('/'); // Navigate to home page if user is logged in
         }
     }, [userData, navigate]);
-    
+
   return (
     <div
     className='flex items-center justify-center w-full pt-5 pb-5'

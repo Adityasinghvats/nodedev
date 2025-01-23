@@ -31,7 +31,10 @@ export class AuthService{
     async login({email, password}){
         // eslint-disable-next-line no-useless-catch
         try {
-            await this.account.createEmailPasswordSession(email,password);
+            console.log("Creating email/password session for:", email);
+            const session = await this.account.createEmailPasswordSession(email, password);
+            console.log("Session created:", session);
+            return session;
         } catch (error) {
             throw error
         }
@@ -39,9 +42,13 @@ export class AuthService{
 
     async getCurrentUser(){
         try {
-            return await this.account.get();
+            console.log("Calling getCurrentUser");
+            const user = await this.account.get();
+            console.log("getCurrentUser result:", user);
+            return user;
         } catch (error) {
             console.log("Appwrite service :: getCurrentUser :: error",  error);
+            throw error;
         }
         // return null;//in case the account get method fails to return an error;
     }
