@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Container, PostCard } from '../components'
 import appwriteService from '../appwrite/config.service'
 import { useSelector } from "react-redux";
+import Logo from '../components/Logo'
 
 function Home() {
 
@@ -22,10 +23,13 @@ function Home() {
     }, [userData]);
 
   if(posts.length === 0) return (
-            <div className="w-full py-8 mt-4 text-center">
+            <div className="w-full h-full py-8 mt-4 text-center">
                 <Container>
                     <div className="flex flex-wrap">
                         <div className="p-2 w-full h-full">
+                            <div className="mb-4 inline-flex items-center">
+                                <Logo width='100px' height='100px' />
+                            </div>
                             <h1 className="text-2xl font-bold hover:text-gray-500">
                                 Login to read posts
                             </h1>
