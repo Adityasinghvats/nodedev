@@ -34,8 +34,10 @@ Currently, two official plugins are available:
     ![Screenshot 2025-01-23 160807](https://github.com/user-attachments/assets/533c92c4-ac58-4a57-93a7-a97ddeb5aca8)
 
   - Home
-    
-    ![Screenshot 2025-01-24 010702](https://github.com/user-attachments/assets/f32fc653-d343-4a59-8983-4bc8b380d4f8)
+    ![Screenshot 2025-01-29 233953](https://github.com/user-attachments/assets/6b0cbfff-cb6a-4611-9ad7-b8923af6ec06)
+
+  - AllPosts
+    ![Screenshot 2025-01-29 233730](https://github.com/user-attachments/assets/9df1b2bb-d7ac-4dea-9860-8f97334b1670)
 
   - EditPost
     ![Screenshot 2025-01-24 011231](https://github.com/user-attachments/assets/ea80a432-325b-470f-a001-e5b9c2584fb2)
